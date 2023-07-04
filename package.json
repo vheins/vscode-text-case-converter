@@ -9,6 +9,11 @@
   "categories": [
     "Other"
   ],
+  "publisher": "vheins",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vheins/vscode-text-case-converter"
+  },
   "activationEvents": [],
   "main": "./extension.js",
   "contributes": {
