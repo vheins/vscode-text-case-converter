@@ -9,26 +9,81 @@ const vscode = require('vscode');
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
+	context.subscriptions.push(
+		vscode.commands.registerCommand('text-case-converter.camelCase', () => {
+			convertSelectedText(camelCase);
+		})
+	);
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "text-case-converter" is now active!');
+	context.subscriptions.push(
+		vscode.commands.registerCommand('text-case-converter.snakeCase', () => {
+			convertSelectedText(snakeCase);
+		})
+	);
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with  registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('text-case-converter.helloWorld', function () {
-		// The code you place here will be executed every time your command is executed
+	context.subscriptions.push(
+		vscode.commands.registerCommand('text-case-converter.titleCase', () => {
+			convertSelectedText(titleCase);
+		})
+	);
 
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from Text Case Converter!');
-	});
+	context.subscriptions.push(
+		vscode.commands.registerCommand('text-case-converter.lowerCase', () => {
+			convertSelectedText(lowerCase);
+		})
+	);
 
-	context.subscriptions.push(disposable);
+	context.subscriptions.push(
+		vscode.commands.registerCommand('text-case-converter.upperCase', () => {
+			convertSelectedText(upperCase);
+		})
+	);
+}
+
+function convertSelectedText(converterFn) {
+	const editor = vscode.window.activeTextEditor;
+	if (editor) {
+		const { document, selections } = editor;
+		editor.edit((editBuilder) => {
+			selections.forEach((selection) => {
+				const selectedText = document.getText(selection);
+				const transformedText = converterFn(selectedText);
+				editBuilder.replace(selection, transformedText);
+			});
+		});
+	}
+}
+
+function camelCase(text) {
+	return text
+		.replace(/[-_\s]+(.?)/g, (_, c) => (c ? c.toUpperCase() : ''));
+}
+
+
+
+function snakeCase(text) {
+	return text
+		.toLowerCase()
+		.replace(/[A-Z]/g, (match, index) => (index === 0 ? match.toLowerCase() : '_' + match.toLowerCase()))
+		.replace(/\s+/g, '_')
+		.replace(/_{2,}/g, '_');
+}
+
+
+function titleCase(text) {
+	return text.replace(/\w\S*/g, (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+}
+
+function lowerCase(text) {
+	return text.toLowerCase();
+}
+
+function upperCase(text) {
+	return text.toUpperCase();
 }
 
 // This method is called when your extension is deactivated
-function deactivate() {}
+function deactivate() { }
 
 module.exports = {
 	activate,

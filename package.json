@@ -12,10 +12,52 @@
   "activationEvents": [],
   "main": "./extension.js",
   "contributes": {
-    "commands": [{
-      "command": "text-case-converter.helloWorld",
-      "title": "Hello World"
-    }]
+    "commands": [
+      {
+        "command": "text-case-converter.upperCase",
+        "title": "To: UPPER CASE"
+      },
+      {
+        "command": "text-case-converter.lowerCase",
+        "title": "To: lower case"
+      },
+      {
+        "command": "text-case-converter.titleCase",
+        "title": "To: Title Case"
+      },
+      {
+        "command": "text-case-converter.camelCase",
+        "title": "To: camelCase"
+      },
+      {
+        "command": "text-case-converter.snakeCase",
+        "title": "To: snake_case"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "text-case-converter.upperCase",
+          "group": "Text Case Converter"
+        },
+        {
+          "command": "text-case-converter.lowerCase",
+          "group": "Text Case Converter"
+        },
+        {
+          "command": "text-case-converter.titleCase",
+          "group": "Text Case Converter"
+        },
+        {
+          "command": "text-case-converter.camelCase",
+          "group": "Text Case Converter"
+        },
+        {
+          "command": "text-case-converter.snakeCase",
+          "group": "Text Case Converter"
+        }
+      ]
+    }
   },
   "scripts": {
     "lint": "eslint .",
@@ -23,14 +65,14 @@
     "test": "node ./test/runTest.js"
   },
   "devDependencies": {
-    "@types/vscode": "^1.79.0",
+    "@types/vscode": "^1.79.1",
     "@types/glob": "^8.1.0",
     "@types/mocha": "^10.0.1",
-    "@types/node": "20.2.5",
-    "eslint": "^8.41.0",
-    "glob": "^8.1.0",
+    "@types/node": "20.3.3",
+    "eslint": "^8.44.0",
+    "glob": "^10.3.1",
     "mocha": "^10.2.0",
-    "typescript": "^5.1.3",
-    "@vscode/test-electron": "^2.3.2"
+    "typescript": "^5.1.6",
+    "@vscode/test-electron": "^2.3.3"
   }
 }
