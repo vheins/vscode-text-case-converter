@@ -1,65 +1,52 @@
-# text-case-converter README
+# Text Case Converter
 
-This is the README for your extension "text-case-converter". After writing up a brief description, we recommend including the following sections.
+The Text Case Converter extension for Visual Studio Code allows you to quickly convert the case of selected text within the editor. It provides commands to convert text to camel case, snake case, title case, lower case, and upper case formats.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+- Convert selected text to camel case
+- Convert selected text to snake case
+- Convert selected text to title case
+- Convert selected text to lower case
+- Convert selected text to upper case
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+This extension requires Visual Studio Code version 1.60.0 or higher.
 
-## Extension Settings
+## Installation
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+1. Open Visual Studio Code.
+2. Go to the Extensions view (`Ctrl+Shift+X` or `Cmd+Shift+X`).
+3. Search for "Text Case Converter".
+4. Click **Install** to install the extension.
+5. Click **Reload** to activate the extension.
 
-For example:
+## Usage
 
-This extension contributes the following settings:
+1. Select the text within the editor that you want to convert.
+2. Right-click on the selected text to open the context menu.
+3. Choose the desired conversion option from the **Text to** submenu.
+4. The selected text will be converted to the chosen case format.
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+Alternatively, you can use the following keyboard shortcuts:
 
-## Known Issues
+- `Ctrl+Shift+P` or `Cmd+Shift+P` to open the Command Palette.
+- Type "Convert Text Case" to filter the available commands.
+- Choose the desired conversion command to execute.
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+## Commands
 
-## Release Notes
+- `text-case-converter.camelCase`: Convert selected text to camel case.
+- `text-case-converter.snakeCase`: Convert selected text to snake case.
+- `text-case-converter.titleCase`: Convert selected text to title case.
+- `text-case-converter.lowerCase`: Convert selected text to lower case.
+- `text-case-converter.upperCase`: Convert selected text to upper case.
 
-Users appreciate release notes as you update your extension.
+## Contributing
 
-### 1.0.0
+Contributions are welcome! If you encounter any issues or have suggestions for improvements, please open an issue on the [GitHub repository](https://github.com/vheins/vscode-text-case-converter).
 
-Initial release of ...
+## License
 
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+This extension is licensed under the [MIT License](LICENSE).
