@@ -1,8 +1,8 @@
 {
   "name": "text-case-converter",
   "displayName": "Text Case Converter",
-  "description": "Text Case Converter",
-  "version": "0.0.1",
+  "description": "Convert selected text between 10 case formats: camelCase, PascalCase, snake_case, CONSTANT_CASE, kebab-case, Train-Case, Title Case, Sentence case, lower case, and UPPER CASE.",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.79.0"
   },
@@ -19,47 +19,107 @@
   "contributes": {
     "commands": [
       {
-        "command": "text-case-converter.upperCase",
-        "title": "To: UPPER CASE"
-      },
-      {
-        "command": "text-case-converter.lowerCase",
-        "title": "To: lower case"
-      },
-      {
-        "command": "text-case-converter.titleCase",
-        "title": "To: Title Case"
-      },
-      {
         "command": "text-case-converter.camelCase",
-        "title": "To: camelCase"
+        "title": "To: camelCase",
+        "category": "Text Case Converter"
+      },
+      {
+        "command": "text-case-converter.pascalCase",
+        "title": "To: PascalCase",
+        "category": "Text Case Converter"
       },
       {
         "command": "text-case-converter.snakeCase",
-        "title": "To: snake_case"
+        "title": "To: snake_case",
+        "category": "Text Case Converter"
+      },
+      {
+        "command": "text-case-converter.constantCase",
+        "title": "To: CONSTANT_CASE",
+        "category": "Text Case Converter"
+      },
+      {
+        "command": "text-case-converter.kebabCase",
+        "title": "To: kebab-case",
+        "category": "Text Case Converter"
+      },
+      {
+        "command": "text-case-converter.trainCase",
+        "title": "To: Train-Case",
+        "category": "Text Case Converter"
+      },
+      {
+        "command": "text-case-converter.titleCase",
+        "title": "To: Title Case",
+        "category": "Text Case Converter"
+      },
+      {
+        "command": "text-case-converter.sentenceCase",
+        "title": "To: Sentence case",
+        "category": "Text Case Converter"
+      },
+      {
+        "command": "text-case-converter.lowerCase",
+        "title": "To: lower case",
+        "category": "Text Case Converter"
+      },
+      {
+        "command": "text-case-converter.upperCase",
+        "title": "To: UPPER CASE",
+        "category": "Text Case Converter"
       }
     ],
     "menus": {
       "editor/context": [
         {
-          "command": "text-case-converter.upperCase",
-          "group": "Text Case Converter"
-        },
-        {
-          "command": "text-case-converter.lowerCase",
-          "group": "Text Case Converter"
-        },
-        {
-          "command": "text-case-converter.titleCase",
-          "group": "Text Case Converter"
-        },
-        {
           "command": "text-case-converter.camelCase",
-          "group": "Text Case Converter"
+          "group": "Text Case Converter",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "text-case-converter.pascalCase",
+          "group": "Text Case Converter",
+          "when": "editorHasSelection"
         },
         {
           "command": "text-case-converter.snakeCase",
-          "group": "Text Case Converter"
+          "group": "Text Case Converter",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "text-case-converter.constantCase",
+          "group": "Text Case Converter",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "text-case-converter.kebabCase",
+          "group": "Text Case Converter",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "text-case-converter.trainCase",
+          "group": "Text Case Converter",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "text-case-converter.titleCase",
+          "group": "Text Case Converter",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "text-case-converter.sentenceCase",
+          "group": "Text Case Converter",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "text-case-converter.lowerCase",
+          "group": "Text Case Converter",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "text-case-converter.upperCase",
+          "group": "Text Case Converter",
+          "when": "editorHasSelection"
         }
       ]
     }
@@ -67,7 +127,8 @@
   "scripts": {
     "lint": "eslint .",
     "pretest": "yarn run lint",
-    "test": "node ./test/runTest.js"
+    "test": "node ./test/runTest.js",
+    "test:unit": "mocha \"test/unit/**/*.test.js\""
   },
   "devDependencies": {
     "@types/vscode": "^1.79.1",
@@ -77,7 +138,6 @@
     "eslint": "^8.44.0",
     "glob": "^10.3.1",
     "mocha": "^10.2.0",
-    "typescript": "^5.1.6",
     "@vscode/test-electron": "^2.3.3"
   }
 }
