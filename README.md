@@ -1,47 +1,68 @@
 # Text Case Converter
 
-The Text Case Converter extension for Visual Studio Code allows you to quickly convert the case of selected text within the editor. It provides commands to convert text to camel case, snake case, title case, lower case, and upper case formats.
+Convert selected text between 10 case formats directly in the editor: camelCase, PascalCase, snake_case, CONSTANT_CASE, kebab-case, Train-Case, Title Case, Sentence case, lower case, and UPPER CASE.
 
 ## Features
 
-- Convert selected text to camel case
-- Convert selected text to snake case
-- Convert selected text to title case
-- Convert selected text to lower case
-- Convert selected text to upper case
+- 10 one-click case conversions from the editor context menu
+- Multi-cursor support — every non-empty selection is converted
+- Unicode-aware tokenizer (handles camelCase input, uppercase runs, digits, hyphens, accents, and punctuation)
+- Context menu entries appear only when there is a selection
+
+| Format | Example output (input: `hello world`) |
+| :--- | :--- |
+| camelCase | `helloWorld` |
+| PascalCase | `HelloWorld` |
+| snake_case | `hello_world` |
+| CONSTANT_CASE | `HELLO_WORLD` |
+| kebab-case | `hello-world` |
+| Train-Case | `Hello-World` |
+| Title Case | `Hello World` |
+| Sentence case | `Hello world` |
+| lower case | `hello world` |
+| UPPER CASE | `HELLO WORLD` |
 
 ## Requirements
 
-This extension requires Visual Studio Code version 1.60.0 or higher.
+This extension requires Visual Studio Code **1.79.0 or higher** (see `engines` in `package.json`).
 
 ## Installation
 
-1. Open Visual Studio Code.
-2. Go to the Extensions view (`Ctrl+Shift+X` or `Cmd+Shift+X`).
-3. Search for "Text Case Converter".
-4. Click **Install** to install the extension.
-5. Click **Reload** to activate the extension.
+### From the Marketplace
+
+1. Open the Extensions view (`Ctrl+Shift+X` or `Cmd+Shift+X`).
+2. Search for "Text Case Converter".
+3. Click **Install**.
+
+### From a VSIX file
+
+1. Build the extension package: `vsce package` (requires [vsce](https://code.visualstudio.com/api/working-with-extensions/publishing-extension)).
+2. Open the Extensions view, click **...** → **Install from VSIX...**, and select the generated `.vsix` file.
 
 ## Usage
 
-1. Select the text within the editor that you want to convert.
-2. Right-click on the selected text to open the context menu.
-3. Choose the desired conversion option from the **Text to** submenu.
-4. The selected text will be converted to the chosen case format.
+1. Select the text you want to convert (multiple selections are supported).
+2. Right-click on the selection to open the context menu — the **Text Case Converter** group appears only when there is a selection.
+3. Choose the desired format, for example **To: camelCase**.
 
-Alternatively, you can use the following keyboard shortcuts:
-
-- `Ctrl+Shift+P` or `Cmd+Shift+P` to open the Command Palette.
-- Type "Convert Text Case" to filter the available commands.
-- Choose the desired conversion command to execute.
+Alternatively, open the Command Palette (`Ctrl+Shift+P` or `Cmd+Shift+P`) and type **Text Case Converter** to filter the available commands.
 
 ## Commands
 
-- `text-case-converter.camelCase`: Convert selected text to camel case.
-- `text-case-converter.snakeCase`: Convert selected text to snake case.
-- `text-case-converter.titleCase`: Convert selected text to title case.
-- `text-case-converter.lowerCase`: Convert selected text to lower case.
-- `text-case-converter.upperCase`: Convert selected text to upper case.
+All commands are registered under the **Text Case Converter** category.
+
+| Command ID | Title | Output (input: `hello world`) |
+| :--- | :--- | :--- |
+| `text-case-converter.camelCase` | To: camelCase | `helloWorld` |
+| `text-case-converter.pascalCase` | To: PascalCase | `HelloWorld` |
+| `text-case-converter.snakeCase` | To: snake_case | `hello_world` |
+| `text-case-converter.constantCase` | To: CONSTANT_CASE | `HELLO_WORLD` |
+| `text-case-converter.kebabCase` | To: kebab-case | `hello-world` |
+| `text-case-converter.trainCase` | To: Train-Case | `Hello-World` |
+| `text-case-converter.titleCase` | To: Title Case | `Hello World` |
+| `text-case-converter.sentenceCase` | To: Sentence case | `Hello world` |
+| `text-case-converter.lowerCase` | To: lower case | `hello world` |
+| `text-case-converter.upperCase` | To: UPPER CASE | `HELLO WORLD` |
 
 ## Contributing
 
