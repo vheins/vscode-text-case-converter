@@ -4,6 +4,12 @@ All notable changes to the "text-case-converter" extension will be documented in
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.1.1] - 2026-08-18
+
+### Added
+
+- Extension icon (512x512) shown in VS Code Marketplace and extension view.
+
 ## [0.1.0] - Unreleased
 
 ### Fixed
