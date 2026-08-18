@@ -32,6 +32,8 @@ jobs:
   publish:
     needs: test
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       VSCE_PAT: ${{ secrets.VSCE_PAT }}
     steps:
@@ -58,3 +60,39 @@ jobs:
 
       - name: Publish to VS Code Marketplace
         run: yarn vsce publish -p "$VSCE_PAT" --no-git-tag-version
+
+      - name: Create GitHub Release
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          VERSION="${GITHUB_REF_NAME#v}"
+
+          # Idempotent: no-op when a release for this tag already exists.
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            echo "Release for ${GITHUB_REF_NAME} already exists — skipping."
+            exit 0
+          fi
+
+          # Extract the changelog section for this version: from the "## [<VERSION>]" line
+          # up to the next "## [" line or end of file.
+          NOTES_FILE="$(mktemp)"
+          awk -v version="$VERSION" '
+            index($0, "## [" version "]") == 1 { found = 1; print; next }
+            found && /^## \[/ { exit }
+            found { print }
+          ' CHANGELOG.md > "$NOTES_FILE"
+
+          if [ -s "$NOTES_FILE" ]; then
+            gh release create "$GITHUB_REF_NAME" \
+              --title "v${VERSION}" \
+              --notes-file "$NOTES_FILE"
+          else
+            echo "No changelog section found for v${VERSION} — using auto-generated notes."
+            gh release create "$GITHUB_REF_NAME" \
+              --title "v${VERSION}" \
+              --generate-notes
+          fi
+
+          rm -f "$NOTES_FILE"
