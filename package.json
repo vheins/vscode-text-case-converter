@@ -128,16 +128,19 @@
     "lint": "eslint .",
     "pretest": "yarn run lint",
     "test": "node ./test/runTest.js",
-    "test:unit": "mocha \"test/unit/**/*.test.js\""
+    "test:unit": "mocha \"test/unit/**/*.test.js\"",
+    "package": "vsce package",
+    "publish": "vsce publish"
   },
   "devDependencies": {
-    "@types/vscode": "^1.79.1",
     "@types/glob": "^8.1.0",
     "@types/mocha": "^10.0.1",
     "@types/node": "20.3.3",
+    "@types/vscode": "^1.79.1",
+    "@vscode/test-electron": "^2.3.3",
+    "@vscode/vsce": "^3.9.2",
     "eslint": "^8.44.0",
     "glob": "^10.3.1",
-    "mocha": "^10.2.0",
-    "@vscode/test-electron": "^2.3.3"
+    "mocha": "^10.2.0"
   }
 }
