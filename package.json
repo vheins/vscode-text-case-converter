@@ -3,6 +3,7 @@
   "displayName": "Text Case Converter",
   "description": "Convert selected text between 10 case formats: camelCase, PascalCase, snake_case, CONSTANT_CASE, kebab-case, Train-Case, Title Case, Sentence case, lower case, and UPPER CASE.",
   "version": "0.1.0",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.79.0"
   },
