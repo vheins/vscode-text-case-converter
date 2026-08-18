@@ -1,91 +1,82 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
+// @ts-check
 const vscode = require('vscode');
-
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
+const converters = require('./converters');
 
 /**
- * @param {vscode.ExtensionContext} context
+ * Registry of all supported case converter commands.
  */
-function activate(context) {
-	context.subscriptions.push(
-		vscode.commands.registerCommand('text-case-converter.camelCase', () => {
-			convertSelectedText(camelCase);
-		})
-	);
+const COMMAND_REGISTRY = [
+	{ id: 'camelCase', title: 'To: camelCase', convert: converters.camelCase },
+	{ id: 'pascalCase', title: 'To: PascalCase', convert: converters.pascalCase },
+	{ id: 'snakeCase', title: 'To: snake_case', convert: converters.snakeCase },
+	{ id: 'constantCase', title: 'To: CONSTANT_CASE', convert: converters.constantCase },
+	{ id: 'kebabCase', title: 'To: kebab-case', convert: converters.kebabCase },
+	{ id: 'trainCase', title: 'To: Train-Case', convert: converters.trainCase },
+	{ id: 'titleCase', title: 'To: Title Case', convert: converters.titleCase },
+	{ id: 'sentenceCase', title: 'To: Sentence case', convert: converters.sentenceCase },
+	{ id: 'lowerCase', title: 'To: lower case', convert: converters.lowerCase },
+	{ id: 'upperCase', title: 'To: UPPER CASE', convert: converters.upperCase }
+];
 
-	context.subscriptions.push(
-		vscode.commands.registerCommand('text-case-converter.snakeCase', () => {
-			convertSelectedText(snakeCase);
-		})
-	);
-
-	context.subscriptions.push(
-		vscode.commands.registerCommand('text-case-converter.titleCase', () => {
-			convertSelectedText(titleCase);
-		})
-	);
-
-	context.subscriptions.push(
-		vscode.commands.registerCommand('text-case-converter.lowerCase', () => {
-			convertSelectedText(lowerCase);
-		})
-	);
-
-	context.subscriptions.push(
-		vscode.commands.registerCommand('text-case-converter.upperCase', () => {
-			convertSelectedText(upperCase);
-		})
-	);
-}
-
-function convertSelectedText(converterFn) {
+/**
+ * Converts selected text in active editor using provided converter function.
+ *
+ * @param {(text: string) => string} converterFn
+ * @returns {Promise<boolean>}
+ */
+async function convertSelectedText(converterFn) {
 	const editor = vscode.window.activeTextEditor;
-	if (editor) {
-		const { document, selections } = editor;
-		editor.edit((editBuilder) => {
-			selections.forEach((selection) => {
+	if (!editor) {
+		vscode.window.showWarningMessage('No active editor found to convert text case.');
+		return false;
+	}
+
+	const { document, selections } = editor;
+	const nonEmptySelections = selections.filter((selection) => !selection.isEmpty);
+
+	if (nonEmptySelections.length === 0) {
+		return false;
+	}
+
+	try {
+		const success = await editor.edit((editBuilder) => {
+			nonEmptySelections.forEach((selection) => {
 				const selectedText = document.getText(selection);
 				const transformedText = converterFn(selectedText);
 				editBuilder.replace(selection, transformedText);
 			});
 		});
+
+		return Boolean(success);
+	} catch (error) {
+		const message = error instanceof Error ? error.message : String(error);
+		vscode.window.showErrorMessage(`Failed to convert text case: ${message}`);
+		return false;
 	}
 }
 
-function camelCase(text) {
-	return text
-		.replace(/[-_\s]+(.?)/g, (_, c) => (c ? c.toUpperCase() : ''));
+/**
+ * Called when extension is activated.
+ *
+ * @param {vscode.ExtensionContext} context
+ */
+function activate(context) {
+	COMMAND_REGISTRY.forEach(({ id, convert }) => {
+		const disposable = vscode.commands.registerCommand(`text-case-converter.${id}`, () => {
+			return convertSelectedText(convert);
+		});
+		context.subscriptions.push(disposable);
+	});
 }
 
-
-
-function snakeCase(text) {
-	return text
-		.toLowerCase()
-		.replace(/[A-Z]/g, (match, index) => (index === 0 ? match.toLowerCase() : '_' + match.toLowerCase()))
-		.replace(/\s+/g, '_')
-		.replace(/_{2,}/g, '_');
-}
-
-
-function titleCase(text) {
-	return text.replace(/\w\S*/g, (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
-}
-
-function lowerCase(text) {
-	return text.toLowerCase();
-}
-
-function upperCase(text) {
-	return text.toUpperCase();
-}
-
-// This method is called when your extension is deactivated
-function deactivate() { }
+/**
+ * Called when extension is deactivated.
+ */
+function deactivate() {}
 
 module.exports = {
 	activate,
-	deactivate
-}
+	deactivate,
+	convertSelectedText,
+	COMMAND_REGISTRY
+};
