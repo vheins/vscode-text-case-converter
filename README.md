@@ -68,6 +68,24 @@ All commands are registered under the **Text Case Converter** category.
 
 Contributions are welcome! If you encounter any issues or have suggestions for improvements, please open an issue on the [GitHub repository](https://github.com/vheins/vscode-text-case-converter).
 
+## Release
+
+Releases are published automatically to the VS Code Marketplace by GitHub Actions when a version tag is pushed.
+
+### 1. Set up the publish token (once)
+
+1. Go to the [Visual Studio Marketplace publisher management page](https://marketplace.visualstudio.com/manage) and select the `vheins` publisher.
+2. Create a **Personal Access Token** with the **Marketplace** scope and **Manage** permission.
+3. In the GitHub repository, go to **Settings → Secrets and variables → Actions** and add the token as a repository secret named `VSCE_PAT`.
+
+### 2. Create a release
+
+1. Bump the `version` field in `package.json` (the release workflow verifies it matches the tag).
+2. Commit the change: `git commit -m "chore: bump version to X.Y.Z"`.
+3. Tag and push: `git tag vX.Y.Z && git push origin vX.Y.Z`.
+
+The `Release` workflow runs the checks (lint, unit tests, packaging) and then publishes the extension with `vsce publish`. For `workflow_dispatch` runs, the published version is the one in `package.json` (version-to-tag verification is only enforced on tag pushes).
+
 ## License
 
 This extension is licensed under the [MIT License](LICENSE).
